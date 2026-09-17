@@ -20,6 +20,8 @@ __pycache__/
 *.bin
 *.model
 *.lgb
+*.pkl
+models_cache/
 
 # Virtual envs and IDEs
 .env

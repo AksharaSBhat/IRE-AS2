@@ -61,3 +61,28 @@ def test_feature_extractor_temporal_leakage_guard():
     # Must only count past_art (count = 1), future_leak_art must be pruned!
     assert X[0, 0] == 1.0
     assert X[1, 0] == 1.0
+
+def test_assert_no_future_click_leakage_detector():
+    base_time = datetime(2024, 5, 20, 12, 0, 0)
+    
+    # 1. Contaminated history
+    leaky_hist = UserHistoryRecord(
+        user_id="U_Leaky",
+        history_article_ids=["past", "future"],
+        history_timestamps=[base_time - timedelta(hours=1), base_time + timedelta(hours=1)]
+    )
+    imp = ImpressionRecord(
+        impression_id=101,
+        user_id="U_Leaky",
+        impression_time=base_time,
+        inview_article_ids=["cand1"],
+        labels=[1]
+    )
+    
+    with pytest.raises(AssertionError, match="Future-click leakage detected"):
+        assert_no_future_click_leakage([imp], {"U_Leaky": leaky_hist})
+
+    # 2. Causal filtered history passes
+    clean_hist = filter_history_before_time(leaky_hist, cutoff_time=base_time)
+    assert_no_future_click_leakage([imp], {"U_Leaky": clean_hist})
+

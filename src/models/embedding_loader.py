@@ -99,3 +99,7 @@ class EmbeddingLoader:
 
         print(f" Computed and cached {len(article_ids):,} MIND embeddings (dim={matrix.shape[1]}).")
         return {aid: matrix[i] for i, aid in enumerate(article_ids)}
+
+load_ebnerd_embeddings = EmbeddingLoader.load_ebnerd_embeddings
+load_or_compute_mind_embeddings = EmbeddingLoader.load_or_compute_mind_embeddings
+compute_or_load_mind_embeddings = EmbeddingLoader.load_or_compute_mind_embeddings
