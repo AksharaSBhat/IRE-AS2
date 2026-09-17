@@ -1,0 +1,41 @@
+# Ignore dataset directories and archives
+data/
+data
+mind_datasets/
+mind_datasets
+feature_store_cache/
+feature_store_cache
+*.zip
+*.tar.gz
+*.parquet
+*.npy
+
+# Python / PyTorch / LightGBM artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.model
+*.lgb
+
+# Virtual envs and IDEs
+.env
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+.DS_Store
+
+# LaTeX build artifacts (except final PDF)
+report/*.aux
+report/*.log
+report/*.out
+report/*.toc
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz
