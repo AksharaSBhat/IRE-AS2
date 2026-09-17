@@ -1,0 +1,150 @@
+{
+  "dataset": "mind",
+  "stage1_evaluation": {
+    "AUC": 0.5669198855644261,
+    "MRR": 0.30335089402694376,
+    "nDCG@5": 0.28348117438912834,
+    "nDCG@10": 0.34364306196179506
+  },
+  "baseline_evaluation": {
+    "AUC": 0.56440809362358,
+    "MRR": 0.2996641276389631,
+    "nDCG@5": 0.2773847060483116,
+    "nDCG@10": 0.34498743227921025
+  },
+  "improved_evaluation": {
+    "AUC": 0.6233172866909193,
+    "MRR": 0.34049937824959114,
+    "nDCG@5": 0.3160177249673399,
+    "nDCG@10": 0.38184721315241155
+  },
+  "paired_bootstrap_ci": {
+    "AUC": {
+      "mean_baseline": 0.56440809362358,
+      "mean_improved": 0.6233172866909193,
+      "mean_delta": 0.058909193067339403,
+      "ci_lower": 0.04212909052523054,
+      "ci_upper": 0.07423629740466194,
+      "p_value": 0.0,
+      "significant": true,
+      "n_samples": 1000,
+      "n_rounds": 1000
+    },
+    "MRR": {
+      "mean_baseline": 0.2996641276389631,
+      "mean_improved": 0.34049937824959114,
+      "mean_delta": 0.040835250610628024,
+      "ci_lower": 0.025807871945994657,
+      "ci_upper": 0.05566263232520797,
+      "p_value": 0.0,
+      "significant": true,
+      "n_samples": 1000,
+      "n_rounds": 1000
+    },
+    "nDCG@5": {
+      "mean_baseline": 0.2773847060483116,
+      "mean_improved": 0.3160177249673399,
+      "mean_delta": 0.03863301891902829,
+      "ci_lower": 0.023315492839262018,
+      "ci_upper": 0.05333381680356988,
+      "p_value": 0.0,
+      "significant": true,
+      "n_samples": 1000,
+      "n_rounds": 1000
+    },
+    "nDCG@10": {
+      "mean_baseline": 0.34498743227921025,
+      "mean_improved": 0.38184721315241155,
+      "mean_delta": 0.036859780873201346,
+      "ci_lower": 0.02400715463837887,
+      "ci_upper": 0.04871237792999061,
+      "p_value": 0.0,
+      "significant": true,
+      "n_samples": 1000,
+      "n_rounds": 1000
+    }
+  },
+  "ablation_study": {
+    "Full Improved": {
+      "AUC": 0.6233172866909193,
+      "MRR": 0.34049937824959114,
+      "nDCG@5": 0.3160177249673399,
+      "nDCG@10": 0.38184721315241155
+    },
+    "no_freshness": {
+      "AUC": 0.6233172866909193,
+      "MRR": 0.34049937824959114,
+      "nDCG@5": 0.3160177249673399,
+      "nDCG@10": 0.38184721315241155
+    },
+    "no_dwell": {
+      "AUC": 0.6233172866909193,
+      "MRR": 0.34049937824959114,
+      "nDCG@5": 0.3160177249673399,
+      "nDCG@10": 0.38184721315241155
+    },
+    "no_category": {
+      "AUC": 0.56440809362358,
+      "MRR": 0.2996641276389631,
+      "nDCG@5": 0.2773847060483116,
+      "nDCG@10": 0.34498743227921025
+    },
+    "no_cross_sim": {
+      "AUC": 0.6051994548007232,
+      "MRR": 0.31605816914229645,
+      "nDCG@5": 0.3028179687104022,
+      "nDCG@10": 0.36748393658725503
+    }
+  },
+  "slicing_evaluation": {
+    "Cold-Start (<= 5 clicks)": {
+      "AUC": 0.6067989613095194,
+      "MRR": 0.3583912966609887,
+      "nDCG@5": 0.3440971568880709,
+      "nDCG@10": 0.4068546382564031
+    },
+    "Warm Users (> 5 clicks)": {
+      "AUC": 0.6270668452130775,
+      "MRR": 0.3364380225365745,
+      "nDCG@5": 0.30964386618778744,
+      "nDCG@10": 0.37617068107359136
+    },
+    "Head Articles Clicked": {
+      "AUC": 0.6463832556772615,
+      "MRR": 0.3441372939251051,
+      "nDCG@5": 0.30452839315139774,
+      "nDCG@10": 0.3719074379962511
+    },
+    "Tail Articles Only": {
+      "AUC": 0.5977208738495353,
+      "MRR": 0.3364623663396326,
+      "nDCG@5": 0.3287674898095036,
+      "nDCG@10": 0.3928774277771804
+    }
+  },
+  "beyond_accuracy": {
+    "intra_list_diversity": 0.9702003961801529,
+    "novelty_bits": 21.84241025279849,
+    "catalog_coverage_pct": 0.9335050124160766
+  },
+  "feature_importance": {
+    "user_click_count": 31.0,
+    "user_avg_dwell": 0.0,
+    "user_category_entropy": 7.0,
+    "cand_position": 19.0,
+    "cand_inview_count": 86.0,
+    "hour_sin": 13.0,
+    "hour_cos": 24.0,
+    "day_of_week": 11.0,
+    "cand_freshness_hours": 0.0,
+    "cand_freshness_decay": 0.0,
+    "cand_popularity_clicks": 128.0,
+    "cand_title_length": 23.0,
+    "cand_abstract_length": 64.0,
+    "sim_user_cand_recency": 121.0,
+    "sim_user_cand_dwell": 15.0,
+    "category_match": 6.0,
+    "user_category_affinity": 82.0,
+    "bm25_score": 0.0
+  }
+}

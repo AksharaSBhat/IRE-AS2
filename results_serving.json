@@ -1,0 +1,63 @@
+{
+  "memory_footprint": {
+    "num_articles": 20738,
+    "num_user_histories": 18827,
+    "num_embeddings": 125541,
+    "articles_memory_mb": 20.25,
+    "histories_memory_mb": 9.19,
+    "vector_index_memory_mb": 215.51,
+    "model_memory_mb": 0.03,
+    "total_serving_memory_mb": 244.98
+  },
+  "latency_benchmark": {
+    "n_trials": 500,
+    "mean_latency_ms": 1.82,
+    "p50_latency_ms": 1.73,
+    "p90_latency_ms": 2.25,
+    "p95_latency_ms": 2.54,
+    "p99_latency_ms": 3.6,
+    "max_latency_ms": 6.82,
+    "stage1_retrieval_ms": 0.01,
+    "stage2_feature_extract_ms": 0.79,
+    "stage2_inference_ms": 1.02,
+    "target_sla_ms": 100.0,
+    "sla_achieved": true,
+    "single_thread_qps": 550.5,
+    "node_qps_8vcpu": 3082.5,
+    "cost_per_1k_queries_usd": 3.1e-05
+  },
+  "scale_analysis": {
+    "current_scale": {
+      "catalog_articles": 20738,
+      "users": 18827,
+      "serving_memory_mb": 244.98,
+      "p99_latency_ms": 3.6
+    },
+    "10x_scale": {
+      "catalog_articles": 207380,
+      "users": 188270,
+      "serving_memory_mb": 2449.8,
+      "projected_cost_per_1k": 3.1e-05
+    },
+    "bottlenecks": [
+      {
+        "subsystem": "In-Memory Feature Store",
+        "current_behavior": "Stores all 18,827 user histories in local Python process memory (~9.19 MB).",
+        "failure_point_at_10x": "At 2M+ users and 10x history volume, Python dict memory exceeds 16GB, causing OOM crashes and high garbage collection latency pauses.",
+        "mitigation": "Migrate to a distributed key-value store (Redis / Dragonfly) with LRU/TTL sliding-window eviction (retaining only last 30 days)."
+      },
+      {
+        "subsystem": "Vector ANN Index",
+        "current_behavior": "Loads all 125,541 300-d vectors in local RAM.",
+        "failure_point_at_10x": "At 1.2M articles, brute-force lookup latency degrades linearly from 1ms to >15ms.",
+        "mitigation": "Deploy sharded HNSW indices (Qdrant / Milvus / ScaNN) with Product Quantization (PQ8), compressing 300-d vectors by 4x."
+      },
+      {
+        "subsystem": "Real-Time Feature Freshness",
+        "current_behavior": "Batch periodic calculation of article click counts and freshness.",
+        "failure_point_at_10x": "Breaking news viral loops occur within minutes; batch feature updates miss fresh click spikes.",
+        "mitigation": "Streaming click ingestion pipeline via Apache Kafka -> Apache Flink streaming stateful aggregator -> Redis."
+      }
+    ]
+  }
+}
